@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>代辦事項清單</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      margin: 5px 0;
+    }
+    .done {
+      text-decoration: line-through;
+      color: #888;
+    }
+    button {
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>代辦事項清單</h1>
+  <input id="new-task" type="text" placeholder="新增事項">
+  <button id="add-btn">添加</button>
+  <ul id="todo-list"></ul>
+
+  <script>
+    const input = document.getElementById('new-task');
+    const addBtn = document.getElementById('add-btn');
+    const list = document.getElementById('todo-list');
+
+    function addTask() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      const li = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.addEventListener('change', () => {
+        li.classList.toggle('done', checkbox.checked);
+      });
+
+      const span = document.createElement('span');
+      span.textContent = text;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = '刪除';
+      removeBtn.addEventListener('click', () => li.remove());
+
+      li.appendChild(checkbox);
+      li.appendChild(span);
+      li.appendChild(removeBtn);
+      list.appendChild(li);
+
+      input.value = '';
+    }
+
+    addBtn.addEventListener('click', addTask);
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') {
+        addTask();
+      }
+    });
+  </script>
+</body>
+</html>
